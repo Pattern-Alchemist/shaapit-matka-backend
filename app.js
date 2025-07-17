@@ -42,10 +42,13 @@ app.use('/api/activities', activityRoutes);
 // Error handling
 app.use(errorHandler);
 
-// Server setup
+// DO NOT use app.listen() for Vercel serverless functions
+// Remove or comment out the following lines:
+/*
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+*/
 
 module.exports = app;
