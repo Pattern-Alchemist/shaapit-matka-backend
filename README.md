@@ -1,4 +1,4 @@
-# Shaapit Matka Backend
+# Shaapit Matka
 
 A dark, mystical backend system for the Shaapit Matka application - a cursed ritual tracking platform with social integration.
 
