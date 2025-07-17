@@ -1,54 +1,28 @@
+// app.js
+
 const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const mongoose = require('mongoose');
+const connectDB = require('./config/db');
 require('dotenv').config();
 
-const connectDB = require('./config/db');
-const errorHandler = require('./middleware/errorHandler');
-
-// Import routes
-const authRoutes = require('./routes/authRoutes');
-const ritualRoutes = require('./routes/ritualRoutes');
-const artifactRoutes = require('./routes/artifactRoutes');
-const activityRoutes = require('./routes/activityRoutes');
-
-// Initialize Express
 const app = express();
 
-// Connect to Database
+// Connect to MongoDB
 connectDB();
 
 // Middleware
-app.use(cors());
-app.use(helmet());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
+// Basic Route
+app.get('/', (req, res) => {
+  res.send('API is running 🚀');
 });
-app.use(limiter);
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/rituals', ritualRoutes);
-app.use('/api/artifacts', artifactRoutes);
-app.use('/api/activities', activityRoutes);
+// Example: If you have additional routes, import and use them here
+// const userRoutes = require('./routes/user');
+// app.use('/api/users', userRoutes);
 
-// Error handling
-app.use(errorHandler);
-
-// DO NOT use app.listen() for Vercel serverless functions
-// Remove or comment out the following lines:
-/*
+// Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server started on port ${PORT}`);
 });
-*/
-
-module.exports = app;
